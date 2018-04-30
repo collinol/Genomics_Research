@@ -22,7 +22,7 @@ print "if you have a directory called CancerType_Groups/ begin from step 3"
 step_number = raw_input()
 
 def options(step_number):
-
+	step_number = int(step_number)
 	if step_number == 1:
 		#Step 1 - This only needs to be run once
 		print "step 1"
@@ -36,7 +36,7 @@ def options(step_number):
 		#Step 3 - Needs to be run for each cancer type 
 		#build UI for selecting cancers to build
 		print "step 3"
-		file_creation.BuildResults()
+		file_creation.BuildResults(ExonScores)
 		print "step 4a"
 		 
 		#Step 4a - will run for all existing cancer types that were build in step 3
@@ -54,7 +54,7 @@ def options(step_number):
 			RNAData, SummaryFile, RNASummary) 
 		print "step 2 complete"
 		print "step 3"
-		file_creation.BuildResults()
+		file_creation.BuildResults(ExonScores)
 		print "step 3 complete"
 		print "step 4a"
 		Evaluate.pvalueStats()
@@ -65,7 +65,7 @@ def options(step_number):
 
 	elif step_number == 3:
 		print "step 3"
-		file_creation.BuildResults()
+		file_creation.BuildResults(ExonScores)
 		print "step 3 complete"
 		print "step 4a"
 		Evaluate.pvalueStats()
@@ -74,12 +74,12 @@ def options(step_number):
 		Evaluate.MasterList()
 		print "complete"
 
-	elif step_number = 4:
+	elif step_number == 4:
 		print "step 4a"
 		Evaluate.pvalueStats()
 		print "step 4a complete"
 		print "step 4b"
 		Evaluate.MasterList()
 		print "complete"
-	
+
 options(step_number)

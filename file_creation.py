@@ -33,7 +33,7 @@ def generateDonorData(SummaryFile,patient_fusion_directory,RNASummary,RNAData):
 #When getting each patient's scores from the ~3GB RNA Data file,
 #we'll know which scores to assign to which patient
 
-def GroupCancers():
+def GroupCancers(ExonScores):
 	exonValuesFileHeader = ExonScores.readline()
 	Cancers = []
 	os.system("mkdir CancerType_Groups")
@@ -136,7 +136,7 @@ def buildPatientDictionary(cancerType,file):
 #Here's where the statistical analysis needs to be changed.
 #This is also the slowest part
 #Deals with exon scores file which is ~3GB
-def EvaluatePatientGroup(cancerType):
+def EvaluatePatientGroup(cancerType,ExonScores):
 	checklist = []
 	columnsToExamine = []
 	patientfiles = []
@@ -226,15 +226,19 @@ def handleFileBuilding(ExonAnnotationFile_input,ExonScores_input,patient_fusion_
 	generateDonorData(SummaryFile,patient_fusion_directory,RNASummary,RNAData)
 	Genefinder.RNADonorId(ExonAnnotationFile,patient_fusion_directory)
 
-	GroupCancers()
+	GroupCancers(ExonScores)
 
 
-def BuildResults():
+def BuildResults(ExonScores):
 	os.system("mkdir Results")
-
+	#running all cancer types will take a long long time#
+	#block out the for loop and uncomment or add new Evaluations#
+	#for specific cancers you're looking to add#
 	Cancers = [name.split("Groups/")[1] for name in glob.glob("./CancerType_Groups/*") ]
 	for cname in Cancers:
-		EvaluatePatientGroup(cname)
+		print cname
+
+		EvaluatePatientGroup(cname,ExonScores)
 	#EvaluatePatientGroup('LIRI')
 	#EvaluatePatientGroup('BLCA')
 	#EvaluatePatientGroup('LUAD')
