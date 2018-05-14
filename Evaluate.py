@@ -86,10 +86,29 @@ def Ttests(cancertype):
 
 #build individual 
 def pvalueStats():
-	Cancers = ["BLCA","LUAD"]
+	Cancers = ["BLCA"
+	,"LUAD"
+	,"BRCA"
+	,"CESC"
+	,"CLLE"
+	,"COAD"
+	,"DLBC"
+	,"GBM"
+	,"HNSC"
+	,"KICH"
+	,"KIRC"
+	,"KIRP"
+	,"LGG"
+	,"LUSC"
+	,"PRAD"
+	,"THCA"
+	,"MALY"
+	,"LIRI"
+
+	]
+	#this takes a long time, comment out cancers you don't want to include
 	os.system("mkdir ./Pvalues")
 	for cname in Cancers:
-		print cname
 		Totals = Ttests(cname)
 		with open("./Pvalues/"+cname+"_pvalues.tsv",'w') as pvalues:
 			for t in sorted(Totals,key = lambda x: x[2]):
@@ -98,7 +117,6 @@ def pvalueStats():
 
 ## collect the best overall scores
 def MasterList():
-	#drivers = ['RET','ROS1','ALK','FGFR3','BRAF','RAF1','STAT6','MYC','RARA']
 	masterList = []
 	count = 0
 	for pfile in glob.glob("./Pvalues/*"):
@@ -108,33 +126,5 @@ def MasterList():
 		for i in sorted(masterList,key = lambda x:x[2]):
 			if float(i[2]) <= .05:
 				count += 1
-		#	if  i[0] in drivers or i[1] in drivers:
-		#		temp.write(i[0]+' '+i[1]+' '+i[2]+' '+i[3].split('\n')[0]+' <--'+'\n')
-		#	else:
+
 			temp.write(i[0]+' '+i[1]+' '+i[2]+' '+i[3])
-	#print count,'with good pvalue'
-#pvalueStats()
-#MasterList()
-'''
-with open("edited.txt",'w') as newEdit:
-	drivers = ['RET','ROS1','ALK','FGFR3','BRAF','RAF1','STAT6','MYC','RARA']
-	count = 0
-	for i in open("tempList.txt",'r'):
-		i = i.split(' ')
-		if float(i[2]) <= .05:
-			count += 1
-		if  i[0] in drivers or i[1] in drivers:
-			newEdit.write(i[0]+' '+i[1]+' '+'%.5f'%(float(i[2]))+' '+i[3].split('\n')[0]+' <--'+'\n')
-		else:
-			newEdit.write(i[0]+' '+i[1]+' '+'%.5f'%(float(i[2]))+' '+i[3])
-	print count
-
-'''
-
-
-
-
-
-
-
-#pvalueStats()
