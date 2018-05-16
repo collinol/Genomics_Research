@@ -31,7 +31,7 @@ ffad9288-c622-11e3-bf01-24c6515278c0.pcawg_consensus_1.6.161116.somatic.sv.bedpe
 and we create a new directory, called "Referenced_patient_data" inside your current working directory. 
 After this process runs (for the size of this data, it takes approximately 10-12 minutes), the "Referenced_patient_data" directory will contain individual files with the same file prefix as the corresponding patient data, but with only the valid gene fusions listed. For example:  
 ```
-first 5 lines (of ~50 lines) of 0bd3a230-531e-44aa-9999-b8ed8da0176b.pcawg_consensus_1.6.161116.somatic.sv.bedpe
+#first 5 lines (of ~50 lines) of 0bd3a230-531e-44aa-9999-b8ed8da0176b.pcawg_consensus_1.6.161116.somatic.sv.bedpe
 chrom1	start1	end1	chrom2	start2	end2	sv_id	pe_support	strand1	strand2	svclass	svmethod
 11	82798867	82798868	11	82936093	82936094	SVMERGE10	37	+	-	DEL	SNOWMAN_BRASS_dRANGER_DELLY
 12	115046363	115046364	4	56334945	56334946	SVMERGE34	35	-	+	TRA	SNOWMAN_BRASS_dRANGER_DELLY
@@ -40,7 +40,7 @@ chrom1	start1	end1	chrom2	start2	end2	sv_id	pe_support	strand1	strand2	svclass	s
 ```
 produces 
 ```
-geneA	geneA orientation	geneB	geneB orientation	chr1	position	chr1 orientation	chr2	position	chr2 orientation
+geneA	geneA_orientation	geneB	geneB_orientation	chr1	position	chr1_orientation	chr2	position	chr2_orientation
 ./patient_data/0bd3a230-531e-44aa-9999-b8ed8da0176b.pcawg_consensus_1.6.161116.somatic.sv.bedpe									
 KSR2	-	PCDH9	-	chr12	118147303	+	chr13	67542094	-
 CLDN14	-	DYRK1A	+	chr21	37873660	-	chr21	38850309	-
@@ -50,6 +50,8 @@ DYRK1A	+	ERG	-	chr21	38850232	+	chr21	39893645	+
 AFF1	+	INTS12	-	chr4	88026639	-	chr4	106603789	-
 INTS12	-	KIAA1429	-	chr4	106603808	+	chr8	95541749	-
 ```
-That's the entire file. First line column headers, second line is the original source file, followed by the data  
-
+That's the entire tsv file. First line column headers, second line is the original source file, followed by the data  
+So looking at this example, this patient has 7 gene fusions.  
+The first one contains genes KSR2 and PCDH9 with the breakpoint on KSR2 located at 118147303 and the breakpoint on PDCH9 located on 67542094. These locations will be used later.  
 ## Step 2
+
