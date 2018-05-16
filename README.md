@@ -54,4 +54,4 @@ That's the entire tsv file. First line column headers, second line is the origin
 So looking at this example, this patient has 7 gene fusions.  
 The first one contains genes KSR2 and PCDH9 with the breakpoint on KSR2 located at 118147303 and the breakpoint on PDCH9 located on 67542094. These locations will be used later.  
 ## Step 2
-
+> working...
