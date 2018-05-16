@@ -64,9 +64,9 @@ chr1	HAVANA	exon	11869	12227	.	+	.	gene_id "ENSG00000223972.4"; transcript_id "E
 chr1	HAVANA	exon	12613	12721	.	+	.	gene_id "ENSG00000223972.4"; transcript_id "ENST00000456328.2"; gene_type "pseudogene"; gene_status "KNOWN"; gene_name "DDX11L1"; transcript_type "processed_transcript"; transcript_status "KNOWN"; transcript_name "DDX11L1-002"; exon_number 2; exon_id "ENSE00003582793.1"; level 2; tag "basic"; havana_gene "OTTHUMG00000000961.2"; havana_transcript "OTTHUMT00000362751.1";
 chr1	HAVANA	exon	13221	14409	.	+	.	gene_id "ENSG00000223972.4"; transcript_id "ENST00000456328.2"; gene_type "pseudogene"; gene_status "KNOWN"; gene_name "DDX11L1"; transcript_type "processed_transcript"; transcript_status "KNOWN"; transcript_name "DDX11L1-002"; exon_number 3; exon_id "ENSE00002312635.1"; level 2; tag "basic"; havana_gene "OTTHUMG00000000961.2"; havana_transcript "OTTHUMT00000362751.1";
 ```
-**Getting a better understanding of this file is important **  
+Getting a better understanding of this file is important
 
-You'll need to talk to Dr. Yang about this file.  
+You'll need to talk to Dr. Yang about this file.  
 The issue is this:  
 You see how the 3rd entry in each line is "gene", "transcript", "exon", "exon", "exon" in that order?  
 So you'll see later that we're looking at the particular RNA-seq value for each exon. However, in the later file that has that data, the exons are labeled by exon number, which, if you ctrl-f "exon_number", you'll see is contained in each line that starts with "exon". However(!), it doesn't occur in this subset, but occassionally you'll get exons on the same gene that have the same number. There's an attribute called exon_id, unfortunately, the RNA-seq value file doesn't list by id. The reason this is a problem is because, while the RNA-seq file will just have one value for one exon number (per patient), the location of that exon (cited in this file) varies for different exons, which will affect which side of the gene breakpoint they are, and therefore affect the results of your data. That's the best I can explain it over text, Dr. Yang can help you further with this.
