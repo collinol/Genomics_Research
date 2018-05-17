@@ -369,6 +369,7 @@ Basically, think about it like this...
 ```
 - Every patient (every human, really) has gene "A" (we'll just call it A).  
 - Let's say we have 3 lung cancer patients total;
+
 Patient 1 has gene fusions
 A-B, D-K and C-F
 Patient 2 has gene fusions
@@ -382,12 +383,68 @@ in any gene fusions at all.
 In this case, it's just Patient 3. 
 Now Patient 3 still has gene A in their genome and the RNA-seq file contains exon scores for each exon on that gene. 
 So we collect the scores of each exon number on gene A for Patient 1 and of each exon on gene A for Patient 3
+
 We convert this array of scores to an array of z scores for each exon (line 208 in file_creation.py)
 This is to measure the statistical difference of the exons involved in fusions
 versus the exons involved in normally behaving genes.
 ```
 That last part is is the part you may want to consider changing.  
-The zscores are used for the T-test, but a T-test isn't really suited for this type of data
+The zscores are used for the T-test, but a T-test isn't really suited for this type of data  
+  
+At the end of this, you'll have a new directory called "Results". Inside here, you'll see subdirectories labeled by cancer name. Inside each of those, you'll see files with familiar looking file prefixes. Remember the files before that had each individual gene with the exons and their locations? Now those same files have had the associated zscores for each of those exons added to that information. Below is part of one of those files (just the first two individual genes aka, one gene fusion)
+```
+ENSG00000083290	ULK2	-	19768956	-
+1	19770641,19771249,-0.218217890236			
+2	19769049,19769141,-1.00636292769			
+3	19768116,19768157,-0.737993368111			
+4	19753055,19753087,-0.0133448318556			
+5	19752682,19752718,-0.358192041357			
+6	19750050,19750223,-0.273878970921			
+7	19748617,19748690,-0.088162847883			
+8	19746434,19746535,-0.0399628447329			
+9	19744802,19744860,0.0203875352017			
+10	19741814,19741896,-0.148956553759			
+11	19729452,19729499,-0.122528227552			
+12	19728407,19728495,0.25224953031			
+13	19720062,19720233,-0.933138949632			
+14	19713691,19713751,0.293840438991			
+15	19708006,19708143,0.089826267105			
+16	19705090,19705235,-0.0894836314736			
+17	19702808,19702888,0.0209262830808			
+18	19700709,19700995,-0.0998118416406			
+19	19699408,19699595,-0.581914373963			
+20	19698935,19699038,0.0580999938876			
+21	19689250,19689399,-0.145679006529			
+22	19687010,19687218,0.113141497729			
+23	19685202,19685380,0.133191619312			
+24	19684299,19684417,0.425414416472			
+25	19683785,19683942,0.334668536512			
+26	19680894,19681029,0.267610802961			
+27	19679622,19679720,-0.298511157063			
+28	19674143,19674380,-0.596196475138			
+ENSG00000065675	PRKCQ	-	6584565	+
+1	6622173,6622263,-0.530281060691			
+2	6556980,6557106,-0.632284962063			
+3	6552957,6553156,-0.54136434314			
+4	6549398,6549458,-0.581810520044			
+5	6540358,6540520,-0.571063273502			
+6	6539182,6539213,-0.591452355234			
+7	6538997,6539082,-0.606197729181			
+8	6533645,6533774,-0.66439290649			
+9	6527997,6528106,-0.592499311674			
+10	6527114,6527231,-0.605737135917			
+11	6525402,6525562,-0.599494146932			
+12	6520954,6521127,-0.587494011963			
+13	6506275,6506366,-0.547822170593			
+14	6504265,6504327,-0.568736248817			
+15	6498636,6498774,-0.605030192545			
+16	6483855,6484043,-0.575022611536			
+17	6472772,6472900,-0.566295527583			
+18	6469105,6470324,-0.545479126787			
+```
+The key to using this data (although, again, you're probably going to end up doing something different than taking zscores, but they're here if you need them) is to use the breakpoint for the gene to split the array of zscores. So for example, in the last gene listed here, you'll see after the gene name and orientation, the number 6584565. That's the location on this gene where it's splitting and recombining with the first gene listed. Now look at the locations of all the exons. You'll notice that exon 1 is above that breakpoint and the rest of them are below that. So the T-test will compare the difference of the set of zscores between those two sides. Again, this is why T-test is super not good. You're comparing 1 datum to 17 other data points. Such unbalance. Much bad. What to do? This is the biggest issue with the data.
+
+## Step 4 - Final Results
 
 
 
