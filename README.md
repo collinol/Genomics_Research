@@ -1,5 +1,5 @@
 # Genomics_Research
-> This readme was written as instructions for another researcher to pick up on the work I left off on.
+> This readme was written as instructions for another researcher to pick up on the work I left off.
 ## Step 1: Referencing hg19
 ```
 hgrefFile = "refGene_hg19_sorted.txt" #prebuilt file  
@@ -445,6 +445,25 @@ ENSG00000065675	PRKCQ	-	6584565	+
 The key to using this data (although, again, you're probably going to end up doing something different than taking zscores, but they're here if you need them) is to use the breakpoint for the gene to split the array of zscores. So for example, in the last gene listed here, you'll see after the gene name and orientation, the number 6584565. That's the location on this gene where it's splitting and recombining with the first gene listed. Now look at the locations of all the exons. You'll notice that exon 1 is above that breakpoint and the rest of them are below that. So the T-test will compare the difference of the set of zscores between those two sides. Again, this is why T-test is super not good. You're comparing 1 datum to 17 other data points. Such unbalance. Much bad. What to do? This is the biggest issue with the data.
 
 ## Step 4 - Final Results
+Evaluate.pvalueStats() and Evaluate.MasterList() use the zscores from these files and a T-test across the breakpoints of the individual genes and sorts by pvalue. pvalueStats() is for each individual cancer type, MasterList will collect all of the data for you and create a list, sorted by best (most likely candidates) first. Essentially how the tests are considered is this: in one gene fusion, you'll have two T-tests done; one on the first gene across its breakpoint (which will have a resulting pvalue) and the second on the other gene, also with a resulting pvalue. Because only one gene in a fusion is all that's required to be a driver (for instance, if gene A is a driver, you could have fusions A-B, A-L, A-P etc all being oncogenic) we take the best p value of the two and assign the entire fusion that best score. My current top 10 list after running this script (and waiting a long time for it to complete) looks like this.
+```
+#columns: first_gene, second_gene, best_pvalue_of_the_two, cancer type
+ALK	TRPC4AP	0.0001	LUAD
+SLC7A6	PRKCA	0.00016	LUSC
+KDELC2	SIK2	0.00016	LUSC
+GPR116	MIOS	0.00019	LUAD
+RAP1GDS1	NPNT	0.00021	LUAD
+GANC	PDE8A	0.00022	LUAD
+FARP2	ABCB4	0.00022	HNSC
+CAPRIN2	PPM1L	0.00024	HNSC
+MAP3K3	SCN4A	0.00025	HNSC
+C14orf39	PCLO	0.00028	LUSC
+```
+That's about as much as I think I can include to get you started. Feel free to email me at collinol@uchicago.edu for questions or clarifications. Like I said, I suspect your main goal that Dr. Yang will task you with will be to develop a better method of scoring the fusions. If you need help reconfiguring the files or maybe getting some data somewhere along the process that I didn't include, let me know. I should be able to find it for you so you don't have to waste time looking through csv columns. 
+
+Good luck!
+
+Collin Olander
 
 
 
