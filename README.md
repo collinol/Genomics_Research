@@ -362,16 +362,32 @@ After this runs, you'll see a new directory called "CancerType_Groups". Those pr
 ### Comparing Exons Scores
 
 Now we're up to the part that you'll be focusing on.  
+> note: this is by far the slowest part. I wrote it for results, not for optimization. You can see for yourself it's O(n <sup>3</sup>). However, it's easily adjustable to just run for results on specific cancer types. You don't need to run the script for the entirety of the data set.
 
 filecreation.EvaluatePatientGroup() looks at each exon on each gene for each patient within a cancer group. What it then does is takes that exon's score, as well as the score for that same exon on the same gene, but from all the patients with the same cancer but that don't have that gene fusion.  
 Basically, think about it like this... 
 ```
 - Every patient (every human, really) has gene "A" (we'll just call it A).  
-- Let's say we have 3 patients
-did this work?
-
+- Let's say we have 3 lung cancer patients total;
+Patient 1 has gene fusions
+A-B, D-K and C-F
+Patient 2 has gene fusions
+C-R, G-D and A-Q
+Patient 3 has gene fusions
+D-F, Q-G and C-L
+  
+Now, when we're looking at Patient 1, we look at each individual gene, starting with A. 
+Then we first look at every other patient in our group and see which ones of them don't have A involved 
+in any gene fusions at all. 
+In this case, it's just Patient 3. 
+Now Patient 3 still has gene A in their genome and the RNA-seq file contains exon scores for each exon on that gene. 
+So we collect the scores of each exon number on gene A for Patient 1 and of each exon on gene A for Patient 3
+We convert this array of scores to an array of z scores for each exon (line 208 in file_creation.py)
+This is to measure the statistical difference of the exons involved in fusions
+versus the exons involved in normally behaving genes.
 ```
-
+That last part is is the part you may want to consider changing.  
+The zscores are used for the T-test, but a T-test isn't really suited for this type of data
 
 
 
