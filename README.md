@@ -1,5 +1,5 @@
 # Genomics_Research
-
+> This readme was written as instructions for another researcher to pick up on the work I left off on.
 ## Step 1: Referencing hg19
 ```
 hgrefFile = "refGene_hg19_sorted.txt" #prebuilt file  
@@ -354,10 +354,19 @@ So you can see that the original gene-fusion file had 2 gene fusions, meaning th
   
 >> side note: in Genefinder.py you'll see two functions getExonFreq() and checkExonNumbers(). Those are tests I wrote just to get an idea of what kind of results I was getting for finding exons in that first file. Just stuff like how many occurrences of a specific number I was getting, or how many genes had overlapping numbers, etc. There's no call to those functions in the main operation of the code, so feel free to call them specifically if you're trying to fix that issue. Or if they're not super easy to follow (I didn't comment them cause it was sort of just hacked together pretty quickly), you can write your own inside that file using those arguments.  
 
-### Step 2c
+## Step 2c
 Next, file_creation.GroupCancers() will create separate directories and put each patient file in the cancer group that they belong in. The reason for this is because when analyzing one patient, we want to look at their RNA-seq values relative to only the other patients with the same cancer type. This is another aspect Dr. Yang can help clarify for you.  
+After this runs, you'll see a new directory called "CancerType_Groups". Those previous files with exon locations will be sorted into subdirectories, each labeled with the cancer name, within this one. It's sorted this way so that we know which other files to compare the data against.  
 
+## Step 3
+### Comparing Exons Scores
 
+Now we're up to the part that you'll be focusing on.  
+
+filecreation.EvaluatePatientGroup() looks at each exon on each gene for each patient within a cancer group. What it then does is takes that exon's score, as well as the score for that same exon on the same gene, but from all the patients with the same cancer but that don't have that gene fusion.  
+Basically, think about it like this... 
+> Every patient (every human, really) has gene "A" (we'll just call it A).  
+> test new line
 
 
 
