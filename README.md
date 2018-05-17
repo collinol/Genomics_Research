@@ -365,8 +365,12 @@ Now we're up to the part that you'll be focusing on.
 
 filecreation.EvaluatePatientGroup() looks at each exon on each gene for each patient within a cancer group. What it then does is takes that exon's score, as well as the score for that same exon on the same gene, but from all the patients with the same cancer but that don't have that gene fusion.  
 Basically, think about it like this... 
-> Every patient (every human, really) has gene "A" (we'll just call it A).  
-> test new line
+```
+- Every patient (every human, really) has gene "A" (we'll just call it A).  
+- Let's say we have 3 patients
+did this work?
+
+```
 
 
 
