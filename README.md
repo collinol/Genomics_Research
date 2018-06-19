@@ -461,6 +461,11 @@ C14orf39	PCLO	0.00028	LUSC
 ```
 That's about as much as I think I can include to get you started. Feel free to email me at collinol@uchicago.edu for questions or clarifications. Like I said, I suspect your main goal that Dr. Yang will task you with will be to develop a better method of scoring the fusions. If you need help reconfiguring the files or maybe getting some data somewhere along the process that I didn't include, let me know. I should be able to find it for you so you don't have to waste time looking through csv columns. 
 
+Additionally, for better statistical tests, I suspect that will be the major focus of your work. Deciding which tests you think would work best, given the nature of the data. My research ended before I could continue with that, so I don't have all the answers. However, before I stopped working on it, I was looking at changing the t-test over to variance analysis like you mentioned. Specifically, ANOVA (analysis of variance) test. There's some good documentation on it here http://www.statisticshowto.com/probability-and-statistics/hypothesis-testing/anova/#HowToRun. It most likely won't be a perfect fit, but there's already python libraries for it https://plot.ly/python/anova/. So it should be relatively quick to implement and see what results you get. 
+
+Beyond pre-built stats packages, there are known driver fusions (ERG-TMPRSS2, BCR-ABL, ALK-(with lots of others), etc). I'm not sure how familiar you are with machine learning techniques, but if you have the time to invest into it, it could be a good approach to collect the data from the current scripts regarding only the exon values for known gene fusions, split that information into a training and testing group, and then see if you can develop a model to accurately classify the test data. I'd start with binary classification (known fusions, unknown fusions) and then get more specific as to what the actual gene fusion is. 
+
+
 Good luck!
 
 Collin Olander
